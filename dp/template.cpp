@@ -8,10 +8,11 @@
 #include<unordered_set>
 #include<algorithm>
 
-
-
 using namespace std;
 
+int min3(int a, int b, int c){
+    return min(a, min(b, c));
+}
 
 int main(){
     cout << "Hello world" << endl;
