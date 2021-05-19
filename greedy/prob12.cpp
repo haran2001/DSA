@@ -36,9 +36,6 @@ bool solve(int n, int k, string str){
             arr[str[i] - 'a']++;
     }
 
-    // for(int i=0; i<MAX_CHAR; i++)
-        // cout << arr[i] << endl;
-
     for(int i=0; i<MAX_CHAR; i++){
         if(arr[i] > k)
             return false;

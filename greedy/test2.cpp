@@ -26,5 +26,6 @@ bool comparator(int a, int b){
 }
 
 int main(){
-    cout << "Hello world" << endl;
+    cout << ' ' - 'a'<< endl;
+    return 0;
 }
