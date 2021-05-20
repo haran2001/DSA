@@ -26,6 +26,23 @@ bool comparator(int a, int b){
     return a > b;
 }
 
+void solve(int arr[], int n){
+    int i, j;
+
+    for(i=0; i<n; i++){
+        for(j=i+1; j<n; j++){
+            if(arr[i] <= arr[j])
+                break;
+        }
+    if(j == n)
+         cout << arr[i] << " ";
+    }
+}
+
+
 int main(){
-    cout << "Hello world" << endl;
+    int arr[] = {16, 17, 4, 3, 5, 2};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    solve(arr, n);
+    return 0;
 }

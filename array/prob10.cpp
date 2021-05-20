@@ -26,6 +26,29 @@ bool comparator(int a, int b){
     return a > b;
 }
 
-int main(){
-    cout << "Hello world" << endl;
+int solve(int arr[], int n){
+    int sum = 0;
+
+    for(int i=0; i<n; i++)
+        sum += arr[i];
+
+    int cum_sum =0;
+
+    for(int i=0; i<n; i++){
+        if(cum_sum == ((sum - arr[i])/2))
+            return i;
+        cum_sum += arr[i];
+    }
+
+    return -1;
+
 }
+
+
+
+int main(){
+    int arr[] = { -7, 1, 5, 2, -4, 3, 0 };
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+    cout << solve(arr, arr_size);
+    return 0;
+    }
