@@ -10,7 +10,7 @@
 #include<algorithm>
 #include<vector>
 #include<cmath>
-#include<set>
+
 
 using namespace std;
 
@@ -26,7 +26,27 @@ bool comparator(int a, int b){
     return a > b;
 }
 
+char* solve(char str[], int n){
+    int index = 0;  
+    int i=0, j=0;
+    for(i=0; i<n; i++){
+        for(j=0; j<i; j++)
+            if(str[i] == str[j])
+                break;
+
+        if(i == j)
+            str[index++] = str[i];
+    }
+
+    return str;
+}
+
+
+
 int main(){
-    cout << "Hello world" << endl;
+    char str[] = "hhell";
+    int n = sizeof(str) / sizeof(str[0]);
+
+    cout << solve(str, n) << endl;
     return 0;
 }

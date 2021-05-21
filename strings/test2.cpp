@@ -6,11 +6,12 @@
 #include<iterator>
 #include<string.h>
 #include<unordered_set>
+#include<set>
 #include<unordered_map>
 #include<algorithm>
 #include<vector>
 #include<cmath>
-#include<set>
+
 
 using namespace std;
 
@@ -27,6 +28,13 @@ bool comparator(int a, int b){
 }
 
 int main(){
-    cout << "Hello world" << endl;
+    set<int> s;
+    s.insert(3);
+    s.insert(4);
+    s.insert(1);
+    s.insert(2);
+
+    for(auto i = s.begin(); i != s.end(); i++)
+        cout << *i << endl;
     return 0;
 }

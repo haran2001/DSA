@@ -26,7 +26,23 @@ bool comparator(int a, int b){
     return a > b;
 }
 
+
+char *solve(char str[], int n){
+    unordered_set<char> s(str, str+n-1);
+
+    int i=s.size()-1;
+    str[i+1] = '\0';
+
+    for(auto x:s)
+        str[i--] = x;
+
+    return str;
+}
+
+
 int main(){
-    cout << "Hello world" << endl;
+    char str[] = "helllooo";
+    int n = sizeof(str) / sizeof(str[0]);
+    cout << solve(str, n) << endl; 
     return 0;
 }

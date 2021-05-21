@@ -26,7 +26,27 @@ bool comparator(int a, int b){
     return a > b;
 }
 
+char * solve(char str[], int n){
+    int index=0;
+    sort(str, str+n-1);
+    char* temp = new char[n];
+
+    for(int i=1; i<n; i++){
+        if(str[i] == str[i-1])
+            continue;
+        else
+            temp[index++] = str[i-1];
+    }
+
+    temp[index] = '\0';
+    return temp;
+}
+
+
 int main(){
-    cout << "Hello world" << endl;
+    char str[] = "hhy";
+    int n = sizeof(str) / sizeof(str[0]);
+
+    cout << solve(str, n) << endl;
     return 0;
 }
