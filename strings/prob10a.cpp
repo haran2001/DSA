@@ -26,17 +26,35 @@ bool comparator(int a, int b){
     return a > b;
 }
 
-int solve(char str[], int l, int h){
-    if(l > h) return INT_MAX;
-    if(l == h) return 0;
-    if(l == h-1) return (str[l] == str[h])?0:1;
-    return (str[l] == str[h])?solve(str, l+1, h-1):
-    min(solve(str, l+1, h), solve(str, l, h-1)) + 1;
+bool areDistinct(string s, int i, int j){
+    vector<bool> v(26);
+    for(int k=i; k<=j; k++){
+        if(v[s[k] - 'a'] == true)
+            return false;
+        v[s[k] - 'a'] = true;
+    }
+
+    return true;
 }
 
 
+int findLongestDistinct(string s){
+    int n =s.length();
+    int res =0;
+
+    for(int i=0; i<n; i++){
+        for(int j=i; j<n; j++){
+            if(areDistinct(s, i, j))
+                res = max(res, i-j+1);
+        }
+    }
+
+    return res;
+
+}
+
 int main(){
-    char str[] = "geeks";
-    cout << solve(str, 0, strlen(str)-1);
+    string str = "geeksforgeeks";
+    cout << findLongestDistinct(str) << endl;
     return 0;
 }

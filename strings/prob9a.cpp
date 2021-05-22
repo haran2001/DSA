@@ -14,8 +14,6 @@
 
 using namespace std;
 
-#define CHARS 256
-
 int min3(int a, int b, int c){
     return min(a, min(b, c));
 }
@@ -28,23 +26,17 @@ bool comparator(int a, int b){
     return a > b;
 }
 
-int findLongest(string s, int n){
-    vector<int> lastIndex(CHARS, -1);
-    int i=0, res=0;
-
-    for(int j=0; j<n; j++){
-        i = max(i, lastIndex[s[j]] + 1);
-        res = max(res, j-i+1);
-        lastIndex[s[j]] = j;
-    }
-
-    return res;
+int solve(char str[], int l, int h){
+    if(l > h) return INT_MAX;
+    if(l == h) return 0;
+    if(l == h-1) return (str[l] == str[h])?0:1;
+    return (str[l] == str[h])?solve(str, l+1, h-1):
+    min(solve(str, l+1, h), solve(str, l, h-1)) + 1;
 }
 
 
 int main(){
-    string str = "geeksforgeeks";
-    int n = str.length();
-    cout << findLongest(str, n) << endl;
+    char str[] = "geeks";
+    cout << solve(str, 0, strlen(str)-1);
     return 0;
 }
