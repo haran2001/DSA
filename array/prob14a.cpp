@@ -26,7 +26,17 @@ bool comparator(int a, int b){
     return a > b;
 }
 
+int solve(int arr[], int n, int k){
+    sort(arr, arr+n);
+    return arr[k-1];
+}
+
+
+
 int main(){
-    cout << "Hello world" << endl;
+    int arr[] = {1, 7, 2, 4, 5,2 ,4 ,5};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int k = 3; 
+    cout << solve(arr, n, k) << endl;
     return 0;
 }
