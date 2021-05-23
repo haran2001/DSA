@@ -1,4 +1,4 @@
-//template for arrays
+//template for Llist
 #include<iostream>
 #include<stdio.h>
 #include<stdlib.h>
@@ -10,6 +10,8 @@
 #include<algorithm>
 #include<vector>
 #include<cmath>
+#include<set>
+
 
 
 using namespace std;
@@ -28,48 +30,75 @@ bool comparator(int a, int b){
 
 struct Node{
     int data;
-    struct Node* next;
+    struct Node * next;
 };
 
-void push(struct Node** head, int data){
-    struct Node* new_node = new Node;
-    new_node->data = data;
-    new_node->next = (*head);
-    (*head) = new_node;
-}
+void removeLoop(struct Node*, struct Node*);
 
-void printList(struct Node* ptr){
-    while(ptr != NULL){
-        printf("%d->", ptr->data);
-        ptr = ptr->next;
-    }
+int detectAndRemoveLoop(struct Node* list){
+    struct Node *slowp = list;
+    struct Node *fastp = list;
 
-    printf("NULL");
-}
+    while(slowp && fastp && fastp->next){
+        slowp = slowp->next;
+        fastp = fastp->next->next;
 
-void printMiddle(struct Node* head){
-    struct Node* fast_ptr = head;
-    struct Node* slow_ptr = head;
-
-    while(fast_ptr != NULL && fast_ptr->next != NULL){
-        fast_ptr = fast_ptr->next->next;
-        slow_ptr = slow_ptr->next;
-    }
-
-    printf("Middle element is %d\n", slow_ptr->data);
-
-}
-
-int main(){
-
-struct Node* head = NULL;
-
-    for(int i=5; i>0; i--){
-        push(&head, i);
-        printList(head);
-        printMiddle(head);
+        if(slowp == fastp){
+            removeLoop(slowp, list);
+            return 1;
+        }
     }
 
     return 0;
+}
 
+void removeLoop(struct Node* loop_node, struct Node* head){
+    struct Node* ptr1;
+    struct Node* ptr2;
+
+    ptr1 = head;
+    while(1){
+        ptr2 = loop_node;
+        while(ptr2->next != loop_node && ptr2->next != ptr1)
+            ptr2 = ptr2->next;
+            if(ptr2->next == ptr1)
+                break;
+            ptr1 = ptr1->next;
+        }
+
+    ptr2->next = NULL;
+}
+
+void printList(struct Node* node){
+    while(node != NULL){
+        cout << node->data << " ";
+        node = node->next;
+    }
+}
+
+struct Node* newNode(int key){
+     struct Node* temp = new Node();
+    temp->data = key;
+    temp->next = NULL;
+    return temp;
+}
+
+
+int main(){
+     struct Node* head = newNode(50);
+    head->next = newNode(20);
+    head->next->next = newNode(15);
+    head->next->next->next = newNode(4);
+    head->next->next->next->next = newNode(10);
+ 
+    /* Create a loop for testing */
+    head->next->next->next->next->next = head->next->next;
+ 
+    detectAndRemoveLoop(head);
+ 
+    cout << "Linked List after removing loop" << endl;
+ 
+    printList(head);
+ 
+    return 0;
 }
