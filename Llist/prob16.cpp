@@ -26,30 +26,12 @@ int max3(int a, int b, int c){
 }
 
 bool comparator(int a, int b){
-    return a > b;
+    return a < b;
 }
 
-class Node{
-    public:
-        int data;
-        Node * next;
-};
-
-void push(Node ** head, int new_data){
-    Node * temp = new Node();
-    temp->data = new_data;
-    temp->next = (*head);
-    (*head) = temp;
+bool listComparator(int a, int b){
+    return a < b;
 }
-
-void printList(Node * head){
-    while(head != NULL){
-        cout << head->data << " ";
-        head = head->next;
-    }
-    cout << endl;
-}
-
 
 int main(){
     cout << "Hello world" << endl;

@@ -13,8 +13,6 @@
 #include<set>
 #include<stack>
 
-
-
 using namespace std;
 
 int min3(int a, int b, int c){
@@ -25,22 +23,15 @@ int max3(int a, int b, int c){
     return max(a, max(b, c));
 }
 
+bool comparator(int a, int b){
+    return a > b;
+}
 
 class Node{
     public:
         int data;
         Node * next;
 };
-
-
-
-bool listComparator(Node* a, Node* b){
-    return (a->data) < (b->data);
-}
-
-// bool listComparator(Node a, Node b){
-//     return (a.data) < (b.data);
-// }
 
 void push(Node ** head, int new_data){
     Node * temp = new Node();
@@ -58,25 +49,38 @@ void printList(Node * head){
 }
 
 
-// void sortList(Node** head, int n){
-//     sort((*head), (*head)+n, listComparator);
-// }
+bool isPalindrome(Node * head){
+    stack<int> s;
+    Node * ptr = head;
 
+    while(ptr != NULL){
+        s.push(ptr->data);
+        ptr = ptr->next;
+    }
 
-void sortList(Node* head, int n){
-    sort((head), (head)+n, listComparator);
+    ptr = head;
+
+    while(ptr != NULL){
+        int i = s.top();
+        s.pop();
+        if(i != ptr->data)
+            return false;
+        ptr = ptr->next;
+    }
+
+    return true;
 }
 
 
 int main(){
     Node * head = NULL;
-
     push(&head, 1);
-    push(&head, 0);
     push(&head, 2);
-    push(&head, 0);
-    printList(head);
-    sortList(&head, 4);
-    printList(head);
+    push(&head, 1);
+    push(&head, 2);
+    push(&head, 1);
+
+
+    cout << isPalindrome(head) << endl;
     return 0;
 }

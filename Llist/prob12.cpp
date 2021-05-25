@@ -11,7 +11,6 @@
 #include<vector>
 #include<cmath>
 #include<set>
-#include<stack>
 
 
 
@@ -25,6 +24,9 @@ int max3(int a, int b, int c){
     return max(a, max(b, c));
 }
 
+bool comparator(int a, int b){
+    return a > b;
+}
 
 class Node{
     public:
@@ -32,15 +34,14 @@ class Node{
         Node * next;
 };
 
+void reversePair(Node ** head){
+    Node * temp = (*head);
 
-
-bool listComparator(Node* a, Node* b){
-    return (a->data) < (b->data);
+    while(temp != NULL && temp->next != NULL){
+        swap(temp->data, temp->next->data);
+        temp = temp->next->next;
+    }
 }
-
-// bool listComparator(Node a, Node b){
-//     return (a.data) < (b.data);
-// }
 
 void push(Node ** head, int new_data){
     Node * temp = new Node();
@@ -58,25 +59,17 @@ void printList(Node * head){
 }
 
 
-// void sortList(Node** head, int n){
-//     sort((*head), (*head)+n, listComparator);
-// }
-
-
-void sortList(Node* head, int n){
-    sort((head), (head)+n, listComparator);
-}
-
-
 int main(){
     Node * head = NULL;
-
     push(&head, 1);
-    push(&head, 0);
     push(&head, 2);
-    push(&head, 0);
+    push(&head, 3);
+    push(&head, 4);
+
     printList(head);
-    sortList(&head, 4);
+    reversePair(&head);
     printList(head);
+
+
     return 0;
 }

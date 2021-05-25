@@ -11,7 +11,6 @@
 #include<vector>
 #include<cmath>
 #include<set>
-#include<stack>
 
 
 
@@ -25,22 +24,15 @@ int max3(int a, int b, int c){
     return max(a, max(b, c));
 }
 
+bool comparator(int a, int b){
+    return a > b;
+}
 
 class Node{
     public:
         int data;
         Node * next;
 };
-
-
-
-bool listComparator(Node* a, Node* b){
-    return (a->data) < (b->data);
-}
-
-// bool listComparator(Node a, Node b){
-//     return (a.data) < (b.data);
-// }
 
 void push(Node ** head, int new_data){
     Node * temp = new Node();
@@ -58,25 +50,43 @@ void printList(Node * head){
 }
 
 
-// void sortList(Node** head, int n){
-//     sort((*head), (*head)+n, listComparator);
-// }
+int findValue(Node * head){
+    int res = 0;
+    int exp = 0;
+    while(head != NULL){
+        res += (pow(10, exp) * head->data);
+        exp++;
+        head = head->next;
+    }
+
+    return res;
+}
 
 
-void sortList(Node* head, int n){
-    sort((head), (head)+n, listComparator);
+Node * add(Node * a, Node * b){
+    int sum = findValue(a) + findValue(b);
+    Node * res = NULL;
+    while(sum > 0){
+        push(&res, sum%10);
+        sum /= 10;
+    }
+    return res;
 }
 
 
 int main(){
-    Node * head = NULL;
+    Node * a = NULL;
+    push(&a, 1);
+    push(&a, 2);
+    push(&a, 3);
 
-    push(&head, 1);
-    push(&head, 0);
-    push(&head, 2);
-    push(&head, 0);
-    printList(head);
-    sortList(&head, 4);
-    printList(head);
+
+    Node * b = NULL;
+    push(&b, 1);
+    push(&b, 0);
+    push(&b, 0);
+
+    Node * res = add(a, b);
+    printList(res);
     return 0;
 }

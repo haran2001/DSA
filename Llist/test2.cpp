@@ -11,9 +11,6 @@
 #include<vector>
 #include<cmath>
 #include<set>
-#include<stack>
-
-
 
 using namespace std;
 
@@ -29,29 +26,29 @@ bool comparator(int a, int b){
     return a > b;
 }
 
-class Node{
-    public:
-        int data;
-        Node * next;
-};
+int solve(int arr[], int n){
+    int max = *max_element(arr, arr+n);
+    int *temp = new int[max];
+    temp = {0}; 
 
-void push(Node ** head, int new_data){
-    Node * temp = new Node();
-    temp->data = new_data;
-    temp->next = (*head);
-    (*head) = temp;
-}
-
-void printList(Node * head){
-    while(head != NULL){
-        cout << head->data << " ";
-        head = head->next;
+    for(int i=0; i<n; i++){
+        cout << "Hello world" << endl;
+        temp[arr[i]]++;
     }
-    cout << endl;
+
+    for(int i=0; i<n; i++){
+        if(temp[arr[i]] == 1)
+            return arr[i];
+    }
+
+    return -1;
 }
 
 
 int main(){
-    cout << "Hello world" << endl;
+    int arr[] = {1, 1, 2, 2, 3, 4, 4};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int ans = solve(arr, n);
+    cout << ans << endl;
     return 0;
 }
