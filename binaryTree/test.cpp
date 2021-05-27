@@ -27,76 +27,55 @@ bool comparator(int a, int b){
     return a > b;
 }
 
-struct node{
-    int data;
-    struct node* left;
-    struct node* right;
+struct Node{
+    int key;
+    struct Node* left, *right;
 };
 
-void printGivenLevel(struct node* root, int level, int ltr);
-int height(struct node* root);
-struct node* newNode(int data);
-
-void printSpiral(struct node* root){
-    int h = height(root);
-    int i;
-    bool ltr = false;
-    for(int i=1; i<=h; i++){
-        printGivenLevel(root, i, ltr);
-        ltr = !ltr;
-    }
-}
-
-
-void printGivenLevel(struct node* root, int level, int ltr){
-    if(root == NULL)
-        return;
-    if(level == 1)
-        cout << root->data << " ";
-    else if(level > 1){
-        if(ltr){
-            printGivenLevel(root->left, level-1, ltr);
-            printGivenLevel(root->right, level-1, ltr);
-        }
-        else{
-            printGivenLevel(root->right, level-1, ltr);
-            printGivenLevel(root->left, level-1, ltr);
-        }
-    }
-}   
-
-int height(struct node* node){
-    if(node == NULL)
-        return 0;
-    else{
-        int lheight = height(node->left);
-        int rheight = height(node->right);
-
-        if(lheight > rheight)
-            return (lheight + 1); 
-
-        else
-            return (rheight + 1);
-    }
-}
-
-struct node* newNode(int data){
-    struct node* temp = new node();
-    temp->data = data;
-    temp->left = NULL;
+struct Node* newNode(int key){
+    struct  Node* temp = new Node();
+    temp->key = key;
+    temp->left = NULL; 
     temp->right = NULL;
-    return temp;
+    return temp; 
+}
+
+
+bool findPath(struct Node* root, vector<int> &path, int k){
+    if(root == NULL) return false;
+    
+    path.push_back(root->key);
+
+    if(root->key == k)
+        return true;
+    
+    if((root->left && findPath(root->left, path, k)) || (root->right && findPath(root->right, path, k)))
+        return true;
+    
+    path.pop_back();
+    return false;
+}
+
+int findLCA(Node * root, int n1, int n2){
+    vector<int> path1, path2;
+    if(!findPath(root, path1, n1) || !findPath(root, path2, n2))
+        return -1;
+    int i;
+    for(int i=0; i<path1.size() && i<path2.size(); i++)
+        if(path1[i] != path2[i])
+            break;
+    return path1[i-1];
 }
 
 int main(){
-    struct node* root = newNode(1);
-    root->left = newNode(1);
+    Node* root = newNode(1);
     root->left = newNode(2);
-    root->left = newNode(3);
-    root->left = newNode(7);
-    root->left = newNode(6);
-    root->left = newNode(5);
-    root->left = newNode(4);
-    printSpiral(root);
+    root->right = newNode(3);
+    root->left->left = newNode(4);
+    root->left->right = newNode(5);
+    root->right->left = newNode(6);
+    root->right->right = newNode(7);
+
+    cout << findLCA(root, 4, 5) << endl;
     return 0;
 }
