@@ -1,0 +1,73 @@
+//template for heap
+#include<iostream>
+#include<stdio.h>
+#include<stdlib.h>
+#include<map>
+#include<iterator>
+#include<string.h>
+#include<unordered_set>
+#include<unordered_map>
+#include<algorithm>
+#include<vector>
+#include<cmath>
+#include<set>
+#include<queue>
+
+
+using namespace std;
+
+int min3(int a, int b, int c){
+    return min(a, min(b, c));
+}
+
+int max3(int a, int b, int c){
+    return max(a, max(b, c));
+}
+
+bool comparator(int a, int b){
+    return a > b;
+}
+
+void heapify(int arr[], int n, int i){
+    int l = 2 * i + 1;
+    int r = 2 * i + 2;
+    int largest = i;
+
+    if(l < n && arr[l] > arr[largest])
+        largest = l;
+
+    if(r < n && arr[r] > arr[largest])
+        largest = r;
+
+    if(largest != i){
+        swap(arr[largest], arr[i]);
+        heapify(arr, n, largest);
+    }
+
+}
+
+
+void heapSort(int arr[], int n){
+    for(int i=n/2-1; i>=0; i--)
+        heapify(arr, n, i);
+    
+    for(int i=n-1; i>0; i--){
+        swap(arr[0], arr[i]);
+        heapify(arr, i, 0);
+    }
+}
+
+void printArray(int arr[], int n){
+    for(int i=0; i<n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
+int main(){
+    int arr[] = { 12, 11, 13, 5, 6, 7 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+ 
+    heapSort(arr, n);
+ 
+    cout << "Sorted array is \n";
+    printArray(arr, n);}
