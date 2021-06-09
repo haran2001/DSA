@@ -1,76 +1,107 @@
-//template for backtracking
-#include<iostream>
-#include<stdio.h>
-#include<stdlib.h>
-#include<map>
-#include<iterator>
-#include<string.h>
-#include<unordered_set>
-#include<unordered_map>
-#include<algorithm>
-#include<vector>
-#include<cmath>
-#include<set>
-#include<queue>
-
-#define N 4
-
+#include "test.h"
 using namespace std;
-
-int min3(int a, int b, int c){
-    return min(a, min(b, c));
-}
-
-int max3(int a, int b, int c){
-    return max(a, max(b, c));
-}
-
-bool comparator(int a, int b){
-    return a > b;
-}
+ 
+const long long INF = 2e18;
+ 
+const int maxN = 1e5 + 69;
+ 
+struct items {
+    int x, y, v;
+    bool operator < (const items& oth) const {
+        return y < oth.y;
+    }
+};
+ 
+struct SegmentTree {
+    int n;
+    vector<long long> st;
+    vector<long long> lazy;
+ 
+    SegmentTree(int n) : n(n), st(n * 4, -INF), lazy(n * 4) {}
+    SegmentTree() {}
+ 
+    void change(long long v, int id) {
+        st[id] += v;
+        lazy[id] += v;
+    }
+ 
+    void push(int id) {
+        change(lazy[id], id * 2);
+        change(lazy[id], id * 2 + 1);
+ 
+        lazy[id] = 0;
+    }
+ 
+    void update(int L, int R, long long v, int id, int l, int r) {
+        if (R < l || r < L) return;
+ 
+        if (L <= l && r <= R) {
+            change(v, id);
+            return;
+        }
+ 
+        push(id);
+ 
+        int mid = (l + r) / 2;
+        update(L, R, v, id * 2, l, mid);
+        update(L, R, v, id * 2 + 1, mid + 1, r);
+ 
+        st[id] = max(st[id * 2], st[id * 2 + 1]);
+    }
+ 
+    void update(int L, int R, long long v) {
+        update(L, R, v, 1, 0, n);
+    }
+};
+ 
+int n, k;
+int m;
+items a[maxN];
+vector<int> vals;
+SegmentTree st;
+ 
+int main() {
+    #define filename "BAI6"
+              //     freopen("0.in.txt","r",stdin);
+//  std::ofstream outfile("output5.009", std::ios_base::binary | std::ios_base::out );
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+ 
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].x >> a[i].y >> a[i].v;
+ 
+        vals.push_back(a[i].x);
+        vals.push_back(a[i].y);
+    }
+ 
+    sort(vals.begin(), vals.end());
+    vals.resize(unique(vals.begin(), vals.end()) - vals.begin());
+    m = vals.size();
+ 
+    sort(a + 1, a + 1 + n);
+ 
+    st = SegmentTree(m);
+ 
+    long long ans = 0;
+    int cur = 0;
+ 
+    for (int r = 0; r < m; r++) {
+        st.update(r, r, INF + 1ll * k * vals[r]);
+ 
+        while (cur + 1 <= n && a[cur + 1].y <= vals[r]) {
+            cur++;
+ 
 
  
-void printSolution(int sol[N][N]){
-    for(int i=0; i<N; i++){
-        for(int j=0; j<N; j++)
-            cout << sol[i][j] << " ";
-        cout << endl;
-    }
-} 
-
-
-
-int solve(int arr[], int n, int k){
-    int sum1 = 0, sum2 = 0;
-    int x = 2 * k + 1;
-    
-    sort(arr, arr+n, greater<int>());
-
-    for(int i=0; i<x; i++)
-        sum1 += arr[i];
-    
-    arr[x-2] += arr[x-1];
-
-    for(int i=0; i<x-1; i += 2)
-        sum2 += arr[i];
-
-    return (max(sum2, sum1 - sum2));
-}
-
-int main(){
-    int t;
-    cin >> t;
-    while(t--){
-        int n, k, i=0;
-        scanf("%d %d", &n, &k);
-        int * arr = new int[n];
-        
-        while(i<n){
-            cin >> arr[i];
-            i++;
+            if (a[cur].v > 0) {
+                int id = lower_bound(vals.begin(), vals.end(), a[cur].x) - vals.begin();
+                st.update(0, id, a[cur].v);
+            }
         }
-
-        cout << solve(arr, n, k) << endl;
+ 
+        ans = max(ans, st.st[1] - 1ll * k * vals[r]);
     }
-    return 0;
+ 
+    cout << ans<<"\n";
 }

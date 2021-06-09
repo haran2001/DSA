@@ -12,8 +12,23 @@
 #include<cmath>
 #include<set>
 #include<queue>
+#include<numeric>
 
-#define N 4
+#define all(v) v.begin(), v.end()
+#define sz(v) (int)(v.size())
+#define rz(v, n) v.resize((n) + 1);
+#define pb push_back
+#define fi first
+#define se second
+#define vi vector <int>
+#define pi pair <int, int>
+#define vpi vector <pi>
+#define vvi vector <vi>
+#define FOR(i, a, b) for (int i = (a); i <= (b); i++)
+#define FORD(i, a, b) for (int i = (a); i >= (b); i--)
+const int inf = 1e9;
+const int N = 2e5 + 1;
+
 
 using namespace std;
 
@@ -29,17 +44,11 @@ bool comparator(int a, int b){
     return a > b;
 }
 
- 
-void printSolution(int sol[N][N]){
-    for(int i=0; i<N; i++){
-        for(int j=0; j<N; j++)
-            cout << sol[i][j] << " ";
-        cout << endl;
-    }
-} 
-
-
 int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0), cout.tie(0);
+
     cout << "Hello world" << endl;
+
     return 0;
 }
