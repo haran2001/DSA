@@ -1,4 +1,5 @@
-//template for backtracking
+//https://www.geeksforgeeks.org/vertex-cover-problem-set-1-introduction-approximate-algorithm-2/#include<iostream>
+
 #include<iostream>
 #include<stdio.h>
 #include<stdlib.h>
@@ -48,7 +49,7 @@ bool comparator(int a, int b){
 
 class Graph{
     int V;
-    list<int>* adj;
+    list<int> *adj;
 public:
     Graph(int V);
     void addEdge(int v, int w);
@@ -61,14 +62,13 @@ Graph::Graph(int V){
     adj = new list<int>[V];
 }
 
-void Graph::addEdge(int v, int w){
-    adj[v].pb(w);
-    adj[w].pb(v);
+void Graph::addEdge(int u, int v){
+    adj[u].pb(v);
+    adj[v].pb(u);
 }
 
-
 void Graph::printVertexCover(){
-    bool *visited = new bool[V];
+    bool* visited = new bool[V];
     for(int i=0; i<V; i++)
         visited[i] = false;
     
@@ -88,19 +88,16 @@ void Graph::printVertexCover(){
     }
 
     for(int i=0; i<V; i++)
-        if(visited[i] == true)
+        if(visited[i])
             cout << i << " ";
-    
 }
-
 
 
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(0), cout.tie(0);
 
-    
-    Graph g(7);
+        Graph g(7);
     g.addEdge(0, 1);
     g.addEdge(0, 2);
     g.addEdge(1, 3);
@@ -109,6 +106,5 @@ int main(){
     g.addEdge(5, 6);
  
     g.printVertexCover();
-
     return 0;
 }

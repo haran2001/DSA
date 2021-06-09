@@ -13,6 +13,8 @@
 #include<set>
 #include<queue>
 #include<numeric>
+#include<list>
+#include<iterator>
 
 #define all(v) v.begin(), v.end()
 #define sz(v) (int)(v.size())
